@@ -24,5 +24,9 @@ for (kappa in kappas) {
 
 par(mfrow=c(2,4))
 for (kappa in kappas) {
-  plot(log(budgets),kappa*log(colMeans(abs(xs$[[paste0("kappa_",kappa)]]-x0))),type="b")
+  risk = colMeans(abs(xs[[paste0("kappa_",kappa)]]-x0))
+  plot(log(budgets),kappa*log(risk),type="l",ylab="log risk",xlab="budget",main=paste0("kappa=",kappa))
+  slope = -kappa/(2*(kappa-1))
+  abline(a=kappa*log(risk[1])-slope*log(budgets[1]),b=slope,col="gray",lty=2)
+  title(main=paste0("slope=",round(-kappa/(2*(kappa-1)),3)),line=0.5,cex.main=1)
 }
